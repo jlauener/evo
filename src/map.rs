@@ -7,6 +7,7 @@ pub struct Tile {
     pub pos: Position,
     pub height: u8,
     pub entity: Option<EntityId>,
+    pub entity_height: u8,
     pub booked: bool,
 }
 
@@ -16,6 +17,7 @@ impl Tile {
             pos: Position::new(x, y),
             height: 0,
             entity: None,
+            entity_height: 0,
             booked: false,
         }
     }

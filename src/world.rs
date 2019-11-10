@@ -24,9 +24,9 @@ impl World {
         }
     }
 
-    pub fn create_data(&mut self, name: &str) -> &mut EntityData {
+    pub fn create_data(&mut self, name: &str, class: u8) -> &mut EntityData {
         let data_id = self.data_store.len() as EntityDataId;
-        self.data_store.push(EntityData::new(data_id, String::from(name)));
+        self.data_store.push(EntityData::new(data_id, String::from(name), class));
         &mut self.data_store[data_id]
     }
 

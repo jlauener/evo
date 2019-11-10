@@ -23,17 +23,17 @@ impl WorldRenderer {
                
                 let entity_data = world.data_store.get(entity.data_id).unwrap();
                 // FIXME
-                let mut sprite = entity_data.sprite;
-                if entity.age > 12 {
-                    sprite += 3;
-                }
-                else if entity.age > 8 {
-                    sprite += 2;
-                }
-                else if entity.age > 4 {
-                    sprite += 1;
-                }
-                self.draw_sprite(ctx, sprite, entity.pos, false);
+                // let mut sprite = entity_data.sprite;
+                // if entity.age > 12 {
+                //     sprite += 3;
+                // }
+                // else if entity.age > 8 {
+                //     sprite += 2;
+                // }
+                // else if entity.age > 4 {
+                //     sprite += 1;
+                // }
+                self.draw_sprite(ctx, entity_data.sprite, entity.pos, false);
             }
             else {
                 self.draw_sprite(ctx, tile.height as u16, tile.pos, false);
