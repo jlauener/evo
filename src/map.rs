@@ -1,7 +1,6 @@
-use std::collections::HashMap;
-
-use crate::entity::*;
-use crate::position::*;
+use crate::entity::EntityId;
+use crate::map_data::MapData;
+use crate::position::Position;
 
 pub struct Tile {
     pub pos: Position,
@@ -12,10 +11,10 @@ pub struct Tile {
 }
 
 impl Tile {
-    fn new(x: i16, y: i16) -> Tile {
+    fn new(x: i16, y: i16, height: u8) -> Tile {
         Tile {
             pos: Position::new(x, y),
-            height: 0,
+            height: height,
             entity: None,
             entity_height: 0,
             booked: false,
@@ -28,30 +27,36 @@ impl Tile {
 }
 
 pub struct Map {
-    tiles: HashMap<(i16, i16), Tile>,
+    tiles: Vec<Tile>,
+    width: usize,
 }
 
 impl Map {
-    pub fn new(width: usize, height: usize) -> Map {
-        let mut tiles = HashMap::new();
-        for iy in 0..height as i16 {
-            for ix in 0..width as i16 {
-                tiles.insert((ix, iy), Tile::new(ix, iy));
+    pub fn new(data: MapData) -> Map {
+        let mut tiles: Vec<Tile> = Vec::new();
+        for iy in 0..data.get_height() {
+            for ix in 0..data.get_width() {
+                let tile = Tile::new(ix as i16, iy as i16, data.get_tile(ix, iy));
+                tiles.push(tile);
             }
         }
-        Map { tiles }
+
+        Map {
+            tiles,
+            width: data.get_width(),
+        }
     }
 
     pub fn get(&self, pos: Position) -> Option<&Tile> {
-        self.tiles.get(&(pos.x, pos.y))
+        self.tiles.get(pos.y as usize * self.width + pos.x as usize)
     }
 
     pub fn get_mut(&mut self, pos: Position) -> Option<&mut Tile> {
-        self.tiles.get_mut(&(pos.x, pos.y))
+        self.tiles.get_mut(pos.y as usize * self.width + pos.x as usize)
     }
 
     pub fn for_each<F>(&self, mut action: F) where F: FnMut(&Tile) {
-        for (_, tile) in &self.tiles {
+        for tile in &self.tiles {
             action(tile);
         }
     }

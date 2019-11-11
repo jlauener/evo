@@ -20,19 +20,7 @@ impl WorldRenderer {
         world.map.for_each(|tile| {
             if let Some(entity_id) = tile.entity {
                 let entity = &world.entities[entity_id];
-               
                 let entity_data = world.data_store.get(entity.data_id).unwrap();
-                // FIXME
-                // let mut sprite = entity_data.sprite;
-                // if entity.age > 12 {
-                //     sprite += 3;
-                // }
-                // else if entity.age > 8 {
-                //     sprite += 2;
-                // }
-                // else if entity.age > 4 {
-                //     sprite += 1;
-                // }
                 self.draw_sprite(ctx, entity_data.sprite, entity.pos, false);
             }
             else {

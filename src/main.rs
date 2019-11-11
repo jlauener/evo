@@ -36,14 +36,7 @@ struct GameState {
 
 fn create_world() -> World {
     let map_data = map_data::load_tiled_map("./assets/map/test.json").unwrap();
-    let mut world = World::new(map_data.get_width(), map_data.get_height());
-
-    for iy in 0..map_data.get_height() {
-        for ix in 0..map_data.get_width() {
-            let position = Position::new(ix as i16, iy as i16);
-            world.map.get_mut(position).unwrap().height = map_data.get_tile(ix, iy);
-        }
-    }
+    let mut world = World::new(map_data);
 
     world.create_data("grass", CLASS_PLANT)
         .set_lifetime(40, 600)

@@ -4,6 +4,7 @@ use slotmap::SlotMap;
 
 use crate::entity::*;
 use crate::map::*;
+use crate::map_data::*;
 
 pub struct World {
     pub map: Map,
@@ -14,9 +15,9 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(width: usize, height: usize) -> World {
+    pub fn new(map_data: MapData) -> World {
         World {
-            map: Map::new(width, height),
+            map: Map::new(map_data),
             entities: SlotMap::with_key(),
             //entities: EntityList::new(),
             //factory: EntityFactory::new(),
